@@ -1,0 +1,18 @@
+﻿@model SchoolManagement.Web.Models.Faculty
+
+@{
+    ViewData["Title"] = "แก้ไขคณะ";
+}
+
+<h2>แก้ไขคณะ</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="FacultyId" />
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="FacultyName">ชื่อคณะ</label>
+        <input asp-for="FacultyName" />
+    </div>
+    <button type="submit">บันทึก</button>
+    <a asp-action="Index">ยกเลิก</a>
+</form>

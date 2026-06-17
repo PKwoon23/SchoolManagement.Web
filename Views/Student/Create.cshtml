@@ -1,0 +1,40 @@
+﻿@model SchoolManagement.Web.Models.Student
+
+@{
+    ViewData["Title"] = "เพิ่มนักเรียน";
+}
+
+<h2>เพิ่มนักเรียน</h2>
+
+<form method="post" action="/Student/Create">
+    <div>
+        <label>รหัสนักเรียน</label>
+        <input type="number" name="StudentCode" />
+    </div>
+    <div>
+        <label>ชื่อ</label>
+        <input type="text" name="FirstName" />
+    </div>
+    <div>
+        <label>นามสกุล</label>
+        <input type="text" name="LastName" />
+    </div>
+    <div>
+        <label>อีเมล</label>
+        <input type="email" name="Email" />
+    </div>
+    <div>
+        <label>เบอร์โทร</label>
+        <input type="text" name="Phone" />
+    </div>
+    <div>
+        <label>ปีที่เข้า</label>
+        <input type="number" name="EntranceYear" />
+    </div>
+    <div>
+        <label>สาขา</label>
+        <input type="number" name="MajorId" />
+    </div>
+    <button type="submit">บันทึก</button>
+    <a href="/Student">ยกเลิก</a>
+</form>

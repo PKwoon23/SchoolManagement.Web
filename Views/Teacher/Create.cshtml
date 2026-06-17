@@ -1,0 +1,26 @@
+﻿@model SchoolManagement.Web.Models.Teacher
+
+@{
+    ViewData["Title"] = "เพิ่มอาจารย์";
+}
+
+<h2>เพิ่มอาจารย์</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label>ชื่ออาจารย์</label>
+        <input type="text" name="TeacherName" />
+    </div>
+    <div>
+        <label>สาขา</label>
+        <select name="MajorId">
+            @foreach (var major in ViewBag.Majors)
+            {
+                <option value="@major.MajorId">@major.MajorName</option>
+            }
+        </select>
+    </div>
+    <button type="submit">บันทึก</button>
+    <a href="/Teacher">ยกเลิก</a>
+</form>

@@ -1,0 +1,41 @@
+﻿@model SchoolManagement.Web.Models.Student
+
+@{
+    ViewData["Title"] = "แก้ไขนักเรียน";
+}
+
+<h2>แก้ไขนักเรียน</h2>
+
+<form method="post" action="/Student/Edit">
+    <input type="hidden" name="StudentId" value="@Model.StudentId" />
+    <div>
+        <label>รหัสนักเรียน</label>
+        <input type="number" name="StudentCode" value="@Model.StudentCode" />
+    </div>
+    <div>
+        <label>ชื่อ</label>
+        <input type="text" name="FirstName" value="@Model.FirstName" />
+    </div>
+    <div>
+        <label>นามสกุล</label>
+        <input type="text" name="LastName" value="@Model.LastName" />
+    </div>
+    <div>
+        <label>อีเมล</label>
+        <input type="email" name="Email" value="@Model.Email" />
+    </div>
+    <div>
+        <label>เบอร์โทร</label>
+        <input type="text" name="Phone" value="@Model.Phone" />
+    </div>
+    <div>
+        <label>ปีที่เข้า</label>
+        <input type="number" name="EntranceYear" value="@Model.EntranceYear" />
+    </div>
+    <div>
+        <label>สาขา</label>
+        <input type="number" name="MajorId" value="@Model.MajorId" />
+    </div>
+    <button type="submit">บันทึก</button>
+    <a href="/Student">ยกเลิก</a>
+</form>

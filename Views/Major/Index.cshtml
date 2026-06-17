@@ -1,0 +1,41 @@
+﻿@model List<SchoolManagement.Web.Models.Major>
+
+@{
+    ViewData["Title"] = "รายชื่อสาขา";
+}
+
+<h2>รายชื่อสาขา</h2>
+
+@if (TempData["Success"] is string success)
+{
+    <script>alert("@success");</script>
+}
+
+@if (TempData["Error"] is string error)
+{
+    <script>alert("@error");</script>
+}
+
+<a asp-action="Create">เพิ่มสาขา</a>
+
+<table border="1">
+    <tr>
+        <th>ชื่อสาขา</th>
+        <th>คณะ</th>
+        <th>จัดการ</th>
+    </tr>
+    @foreach (var major in Model)
+    {
+        <tr>
+            <td>@major.MajorName</td>
+            <td>@major.Faculty?.FacultyName</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@major.MajorId">แก้ไข</a>
+                <form asp-action="Delete" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@major.MajorId" />
+                    <button type="submit">ลบ</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

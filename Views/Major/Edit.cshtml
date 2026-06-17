@@ -1,0 +1,27 @@
+﻿@model SchoolManagement.Web.Models.Major
+
+@{
+    ViewData["Title"] = "แก้ไขสาขา";
+}
+
+<h2>แก้ไขสาขา</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="MajorId" />
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label>ชื่อสาขา</label>
+        <input type="text" name="MajorName" value="@Model.MajorName" />
+    </div>
+    <div>
+        <label>คณะ</label>
+        <select name="FacultyId">
+            @foreach (var faculty in ViewBag.Faculties)
+            {
+                <option value="@faculty.FacultyId" selected="@(faculty.FacultyId == Model.FacultyId)">@faculty.FacultyName</option>
+            }
+        </select>
+    </div>
+    <button type="submit">บันทึก</button>
+    <a href="/Major">ยกเลิก</a>
+</form>

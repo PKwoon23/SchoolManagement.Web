@@ -1,0 +1,49 @@
+﻿@model List<SchoolManagement.Web.Models.Student>
+
+@{
+    ViewData["Title"] = "รายชื่อนักเรียน";
+}
+
+<h2>รายชื่อนักเรียน</h2>
+
+@if (TempData["Success"] is string success)
+{
+    <script>alert("@success");</script>
+}
+
+@if (TempData["Error"] is string error)
+{
+    <script>alert("@error");</script>
+}
+
+<a asp-action="Create">เพิ่มนักเรียน</a>
+
+<table border="1">
+    <tr>
+        <th>รหัสนักเรียน</th>
+        <th>ชื่อ</th>
+        <th>นามสกุล</th>
+        <th>อีเมล</th>
+        <th>เบอร์โทร</th>
+        <th>สาขา</th>
+        <th>จัดการ</th>
+    </tr>
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>@student.StudentCode</td>
+            <td>@student.FirstName</td>
+            <td>@student.LastName</td>
+            <td>@student.Email</td>
+            <td>@student.Phone</td>
+            <td>@student.Major?.MajorName</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@student.StudentId">แก้ไข</a>
+                <form asp-action="Delete" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@student.StudentId" />
+                    <button type="submit">ลบ</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

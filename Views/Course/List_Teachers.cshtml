@@ -1,0 +1,40 @@
+﻿@model List<SchoolManagement.Web.Models.Teacher>
+@{
+    ViewData["Title"] = "รายชื่ออาจารย์ผู้สอน";
+}
+
+<h2>รายชื่ออาจารย์ผู้สอน</h2>
+<h5 class="text-muted">
+    วิชา: @ViewBag.CourseId - @ViewBag.CourseName
+</h5>
+
+<a asp-action="Index" class="btn btn-secondary mb-3">กลับไปหน้ารายวิชา</a>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>รหัสอาจารย์</th>
+                <th>ชื่ออาจารย์</th>
+                <th>รหัสสาขา</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)  
+            {
+                <tr>
+                    <td>@item.TeacherId</td>
+                    <td>@item.TeacherName</td>
+                    <td>@item.MajorId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        ยังไม่มีอาจารย์ผู้สอนวิชา <strong>@ViewBag.CourseName</strong>
+    </div>
+}

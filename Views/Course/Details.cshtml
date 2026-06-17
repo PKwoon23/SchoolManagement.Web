@@ -1,0 +1,56 @@
+﻿@model SchoolManagement.Web.Models.Course
+@{
+    ViewData["Title"] = "รายละเอียดวิชา";
+    var teachers = ViewBag.Teachers as List<SchoolManagement.Web.Models.Teacher>;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@ViewData["Title"]</h2>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.CourseId" class="btn btn-warning">
+            แก้ไขรายวิชา
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">กลับ</a>
+    </div>
+</div>
+<hr />
+
+<div class="card mb-4">
+    <div class="card-header">ข้อมูลวิชา</div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">รหัสวิชา</dt>
+            <dd class="col-sm-9">@Model.CourseId</dd>
+
+            <dt class="col-sm-3">ชื่อวิชา</dt>
+            <dd class="col-sm-9">@Model.CourseName</dd>
+
+            <dt class="col-sm-3">หน่วยกิต</dt>
+            <dd class="col-sm-9">@Model.Credit</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">อาจารย์ผู้สอน</div>
+    <div class="card-body">
+        @if (teachers != null && teachers.Any())
+        {
+            <table class="table table-sm mb-0">
+                <tbody>
+                    @foreach (var t in teachers)
+                    {
+                        <tr>
+                            <td width="100">@t.TeacherId</td>
+                            <td>@t.TeacherName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-muted mb-0">ยังไม่มีอาจารย์ผู้สอน</p>
+        }
+    </div>
+</div>

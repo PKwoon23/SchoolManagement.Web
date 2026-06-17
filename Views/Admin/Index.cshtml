@@ -1,0 +1,197 @@
+﻿
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/admin-dashboard.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-brand">
+            <i class="bi bi-mortarboard-fill"></i>
+            <span>Academic Admin</span>
+        </div>
+
+        <div class="nav-section">เมนูหลัก</div>
+        <a class="nav-link active" asp-controller="Admin" asp-action="Index">
+            <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+
+        <div class="nav-section">จัดการข้อมูล</div>
+        <a class="nav-link" asp-controller="Student" asp-action="Index">
+            <i class="bi bi-people-fill"></i> นักศึกษา
+        </a>
+        <a class="nav-link" asp-controller="Teacher" asp-action="Index">
+            <i class="bi bi-person-workspace"></i> อาจารย์
+        </a>
+        <a class="nav-link" asp-controller="Course" asp-action="Index">
+            <i class="bi bi-book-fill"></i> รายวิชา
+        </a>
+        <a class="nav-link" asp-controller="Faculty" asp-action="Index">
+            <i class="bi bi-building"></i> คณะ
+        </a>
+        <a class="nav-link" asp-controller="Major" asp-action="Index">
+            <i class="bi bi-diagram-3-fill"></i> สาขาวิชา
+        </a>
+
+        <div class="nav-section">ระบบ</div>
+        <a class="nav-link" asp-controller="Auth" asp-action="Logout">
+            <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content">
+
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div>
+                <h4><i class="bi bi-speedometer2 me-2"></i>Dashboard</h4>
+                <small class="text-muted">ภาพรวมระบบ Academic Management</small>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-muted small">
+                    <i class="bi bi-calendar3 me-1"></i>
+                    @DateTime.Now.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("th-TH"))
+                </span>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-person-circle fs-4 text-secondary"></i>
+                    <span class="fw-semibold small">@User.Identity?.Name</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-xl-3">
+                <a href="@Url.Action("Index", "Student")" class="stat-card">
+                    <div class="icon-box icon-box--students">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">นักศึกษาทั้งหมด</div>
+                        <div class="stat-number">@(ViewBag.StudentCount ?? "-")</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <a href="@Url.Action("Index", "Teacher")" class="stat-card">
+                    <div class="icon-box icon-box--teachers">
+                        <i class="bi bi-person-workspace"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">อาจารย์ทั้งหมด</div>
+                        <div class="stat-number">@(ViewBag.TeacherCount ?? "-")</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <a href="@Url.Action("Index", "Course")" class="stat-card">
+                    <div class="icon-box icon-box--courses">
+                        <i class="bi bi-book-fill"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">รายวิชาทั้งหมด</div>
+                        <div class="stat-number">@(ViewBag.CourseCount ?? "-")</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <a href="@Url.Action("Index", "Faculty")" class="stat-card">
+                    <div class="icon-box icon-box--faculties">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">คณะทั้งหมด</div>
+                        <div class="stat-number">@(ViewBag.FacultyCount ?? "-")</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section-title">การจัดการด่วน</div>
+        <div class="row g-3 mb-4">
+
+            <!-- Student -->
+            <div class="col-md-6 col-xl-4">
+                <div class="action-card">
+                    <div class="card-title"><i class="bi bi-people-fill me-2 text-primary"></i>นักศึกษา</div>
+                    <a href="@Url.Action("Index", "Student")" class="btn-action">
+                        <i class="bi bi-list-ul"></i> รายชื่อนักศึกษา
+                    </a>
+                    <a href="@Url.Action("Create", "Student")" class="btn-action">
+                        <i class="bi bi-plus-circle"></i> เพิ่มนักศึกษา
+                    </a>
+                </div>
+            </div>
+
+            <!-- Teacher -->
+            <div class="col-md-6 col-xl-4">
+                <div class="action-card">
+                    <div class="card-title"><i class="bi bi-person-workspace me-2 text-success"></i>อาจารย์</div>
+                    <a href="@Url.Action("Index", "Teacher")" class="btn-action">
+                        <i class="bi bi-list-ul"></i> รายชื่ออาจารย์
+                    </a>
+                    <a href="@Url.Action("Create", "Teacher")" class="btn-action">
+                        <i class="bi bi-plus-circle"></i> เพิ่มอาจารย์
+                    </a>
+                </div>
+            </div>
+
+            <!-- Course -->
+            <div class="col-md-6 col-xl-4">
+                <div class="action-card">
+                    <div class="card-title"><i class="bi bi-book-fill me-2 text-warning"></i>รายวิชา</div>
+                    <a href="@Url.Action("Index", "Course")" class="btn-action">
+                        <i class="bi bi-list-ul"></i> รายการวิชา
+                    </a>
+                    <a href="@Url.Action("Create", "Course")" class="btn-action">
+                        <i class="bi bi-plus-circle"></i> เพิ่มวิชา
+                    </a>
+                </div>
+            </div>
+
+            <!-- Faculty -->
+            <div class="col-md-6 col-xl-4">
+                <div class="action-card">
+                    <div class="card-title"><i class="bi bi-building me-2 text-danger"></i>คณะ</div>
+                    <a href="@Url.Action("Index", "Faculty")" class="btn-action">
+                        <i class="bi bi-list-ul"></i> รายการคณะ
+                    </a>
+                    <a href="@Url.Action("Create", "Faculty")" class="btn-action">
+                        <i class="bi bi-plus-circle"></i> เพิ่มคณะ
+                    </a>
+                </div>
+            </div>
+
+            <!-- Major -->
+            <div class="col-md-6 col-xl-4">
+                <div class="action-card">
+                    <div class="card-title"><i class="bi bi-diagram-3-fill me-2 text-info"></i>สาขาวิชา</div>
+                    <a href="@Url.Action("Index", "Major")" class="btn-action">
+                        <i class="bi bi-list-ul"></i> รายการสาขา
+                    </a>
+                    <a href="@Url.Action("Create", "Major")" class="btn-action">
+                        <i class="bi bi-plus-circle"></i> เพิ่มสาขา
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

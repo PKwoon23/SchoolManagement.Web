@@ -1,0 +1,21 @@
+﻿@model SchoolManagement.Web.Models.Course
+
+@{
+    ViewData["Title"] = "แก้ไขวิชา";
+}
+
+<h2>แก้ไขวิชา</h2>
+
+<form method="post" action="/Course/Edit">
+    <input type="hidden" name="CourseId" value="@Model.CourseId" />
+    <div>
+        <label>ชื่อวิชา</label>
+        <input type="text" name="CourseName" value="@Model.CourseName" />
+    </div>
+    <div>
+        <label>หน่วยกิต</label>
+        <input type="number" name="Credit" value="@Model.Credit" />
+    </div>
+    <button type="submit">บันทึก</button>
+    <a href="/Course">ยกเลิก</a>
+</form>
