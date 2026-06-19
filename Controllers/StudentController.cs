@@ -28,10 +28,14 @@ namespace SchoolManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student student)
         {
-            if (!ModelState.IsValid)
+            var result = await _studentService.AddStudent(student);
+            if (result.IsPass != "1")
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View(student);
+            }
 
-            await _studentService.AddStudent(student);
+            TempData["Success"] = "เพิ่มสำเร็จ";
             return RedirectToAction(nameof(Index));
         }
 
@@ -48,10 +52,14 @@ namespace SchoolManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Student student)
         {
-            if (!ModelState.IsValid)
+            var result = await _studentService.UpdateStudent(student);
+            if (result.IsPass != "1")
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View(student);
+            }
 
-            await _studentService.UpdateStudent(student);
+            TempData["Success"] = "แก้ไขสำเร็จ";
             return RedirectToAction(nameof(Index));
         }
 
@@ -59,7 +67,13 @@ namespace SchoolManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _studentService.DeleteStudent(id);
+            var result = await _studentService.DeleteStudent(id);
+            if (result.IsPass != "1")
+            {
+                TempData["Error"] = result.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
             TempData["Success"] = "ลบสำเร็จ";
             return RedirectToAction(nameof(Index));
         }

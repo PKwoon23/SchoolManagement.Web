@@ -29,13 +29,15 @@ namespace SchoolManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Major major)
         {
-            if (!ModelState.IsValid)
+            var result = await _majorService.AddMajor(major);
+            if (result.IsPass != "1")
             {
+                ModelState.AddModelError(string.Empty, result.Message);
                 ViewBag.Faculties = await _majorService.GetAllFaculties();
                 return View(major);
             }
 
-            await _majorService.AddMajor(major);
+            TempData["Success"] = "เพิ่มสำเร็จ";
             return RedirectToAction(nameof(Index));
         }
 
@@ -53,13 +55,15 @@ namespace SchoolManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Major major)
         {
-            if (!ModelState.IsValid)
+            var result = await _majorService.UpdateMajor(major);
+            if (result.IsPass != "1")
             {
+                ModelState.AddModelError(string.Empty, result.Message);
                 ViewBag.Faculties = await _majorService.GetAllFaculties();
                 return View(major);
             }
 
-            await _majorService.UpdateMajor(major);
+            TempData["Success"] = "แก้ไขสำเร็จ";
             return RedirectToAction(nameof(Index));
         }
 
@@ -67,7 +71,13 @@ namespace SchoolManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _majorService.DeleteMajor(id);
+            var result = await _majorService.DeleteMajor(id);
+            if (result.IsPass != "1")
+            {
+                TempData["Error"] = result.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
             TempData["Success"] = "ลบสำเร็จ";
             return RedirectToAction(nameof(Index));
         }

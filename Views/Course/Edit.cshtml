@@ -6,8 +6,9 @@
 
 <h2>แก้ไขวิชา</h2>
 
-<form method="post" action="/Course/Edit">
+<form asp-action="Edit" method="post">
     <input type="hidden" name="CourseId" value="@Model.CourseId" />
+    <div asp-validation-summary="All"></div>
     <div>
         <label>ชื่อวิชา</label>
         <input type="text" name="CourseName" value="@Model.CourseName" />
@@ -17,5 +18,5 @@
         <input type="number" name="Credit" value="@Model.Credit" />
     </div>
     <button type="submit">บันทึก</button>
-    <a href="/Course">ยกเลิก</a>
+    <a asp-action="Index">ยกเลิก</a>
 </form>

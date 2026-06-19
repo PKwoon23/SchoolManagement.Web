@@ -4,40 +4,44 @@
     ViewData["Title"] = "รายชื่อคณะ";
 }
 
-<h2>รายชื่อคณะ</h2>
-
 @if (TempData["Success"] is string success)
 {
     <script>
-        alert("@success");
+        alert(@Html.Raw(Json.Serialize(success)))
     </script>
 }
 
 @if (TempData["Error"] is string error)
 {
     <script>
-        alert("@error");
+        alert(@Html.Raw(Json.Serialize(error)))
     </script>
 }
+
+<h2>รายชื่อคณะ</h2>
 
 <a asp-action="Create">เพิ่มคณะ</a>
 
 <table border="1">
+
     <tr>
         <th>ชื่อคณะ</th>
         <th>จัดการ</th>
     </tr>
+
     @foreach (var faculty in Model)
     {
         <tr>
             <td>@faculty.FacultyName</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@faculty.FacultyId">แก้ไข</a>
-                <form asp-action="Delete" method="post" style="display: inline;">
+                <form asp-action="Delete" method="post" style="display: inline;"
+                      onsubmit="return confirm('ต้องการลบคณะนี้ใช่หรือไม่?');">
                     <input type="hidden" name="id" value="@faculty.FacultyId" />
                     <button type="submit">ลบ</button>
                 </form>
             </td>
         </tr>
     }
+
 </table>

@@ -8,12 +8,16 @@
 
 @if (TempData["Success"] is string success)
 {
-    <script>alert("@success");</script>
+    <script>
+        alert(@Html.Raw(Json.Serialize(success)))
+    </script>
 }
 
 @if (TempData["Error"] is string error)
 {
-    <script>alert("@error");</script>
+    <script>
+        alert(@Html.Raw(Json.Serialize(error)))
+    </script>
 }
 
 <a asp-action="Create">เพิ่มนักเรียน</a>
@@ -39,7 +43,8 @@
             <td>@student.Major?.MajorName</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@student.StudentId">แก้ไข</a>
-                <form asp-action="Delete" method="post" style="display: inline;">
+                <form asp-action="Delete" method="post" style="display: inline;"
+                      onsubmit="return confirm('ต้องการลบนักเรียนคนนี้ใช่หรือไม่?');">
                     <input type="hidden" name="id" value="@student.StudentId" />
                     <button type="submit">ลบ</button>
                 </form>

@@ -144,3 +144,4 @@ c:\Users\PC\source\repos\SchoolManagement.Web\SchoolManagement.Web\obj\Debug\net
 c:\Users\PC\source\repos\SchoolManagement.Web\SchoolManagement.Web\obj\Debug\net8.0\SchoolManagement.Web.pdb
 c:\Users\PC\source\repos\SchoolManagement.Web\SchoolManagement.Web\obj\Debug\net8.0\SchoolManagement.Web.genruntimeconfig.cache
 c:\Users\PC\source\repos\SchoolManagement.Web\SchoolManagement.Web\obj\Debug\net8.0\ref\SchoolManagement.Web.dll
+C:\Users\PC\source\repos\SchoolManagement.Web\SchoolManagement.Web\obj\Debug\net8.0\SchoolManagement.Web.sourcelink.json

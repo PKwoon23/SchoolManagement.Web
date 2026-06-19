@@ -8,12 +8,16 @@
 
 @if (TempData["Success"] is string success)
 {
-    <script>alert("@success");</script>
+    <script>
+        alert(@Html.Raw(Json.Serialize(success)))
+    </script>
 }
 
 @if (TempData["Error"] is string error)
 {
-    <script>alert("@error");</script>
+    <script>
+        alert(@Html.Raw(Json.Serialize(error)))
+    </script>
 }
 
 <a href="/Course/Create" class="btn-add" style="padding: 8px 12px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px;">เพิ่มวิชา</a>
@@ -63,7 +67,11 @@
                 <td style="padding: 8px; text-align: center;">
                     <a asp-action="Details" asp-route-id="@course.CourseId">รายละเอียด</a> |
                     <a asp-action="Edit" asp-route-id="@course.CourseId">แก้ไข</a> |
-                    <a asp-action="Delete" asp-route-id="@course.CourseId">ลบ</a>
+                    <form asp-action="Delete" method="post" style="display: inline;"
+                          onsubmit="return confirm('ต้องการลบวิชานี้ใช่หรือไม่?');">
+                        <input type="hidden" name="id" value="@course.CourseId" />
+                        <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer; padding: 0;">ลบ</button>
+                    </form>
                 </td>
             </tr>
         }

@@ -8,6 +8,7 @@
 
 <form asp-action="Create" method="post">
     <div asp-validation-summary="All"></div>
+  
     <div>
         <label asp-for="FacultyName">ชื่อคณะ</label>
         <input asp-for="FacultyName" />
@@ -15,3 +16,28 @@
     <button type="submit">บันทึก</button>
     <a asp-action="Index">ยกเลิก</a>
 </form>
+
+<h2>เพิ่มคณะ</h2>
+
+@* <form asp-action="Create" method="post">
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        var errorMessage = string.Join("\n",
+            ViewData.ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
+
+        <script>
+                alert(@Html.Raw(Json.Serialize(errorMessage)));
+        </script>
+    }
+
+    <div>
+        <label asp-for="FacultyName">ชื่อคณะ</label>
+        <input asp-for="FacultyName" />
+    </div>
+
+    <button type="submit">บันทึก</button>
+    <a asp-action="Index">ยกเลิก</a>
+</form> *@

@@ -49,10 +49,14 @@ namespace SchoolManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Course course)
         {
-            if (!ModelState.IsValid)
+            var result = await _courseService.AddCourse(course);
+            if (result.IsPass != "1")
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View(course);
+            }
 
-            await _courseService.AddCourse(course);
+            TempData["Success"] = "เพิ่มสำเร็จ";
             return RedirectToAction(nameof(Index));
         }
 
@@ -67,32 +71,30 @@ namespace SchoolManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Course course)
+        public async Task<IActionResult> Edit(Course course)
         {
-            if (id != course.CourseId)
-                return NotFound();
-
-            if (!ModelState.IsValid)
+            var result = await _courseService.UpdateCourse(course);
+            if (result.IsPass != "1")
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View(course);
+            }
 
-            await _courseService.UpdateCourse(course);
+            TempData["Success"] = "แก้ไขสำเร็จ";
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var course = await _courseService.GetCourseById(id);
-            if (course == null)
-                return NotFound();
+            var result = await _courseService.DeleteCourse(id);
+            if (result.IsPass != "1")
+            {
+                TempData["Error"] = result.Message;
+                return RedirectToAction(nameof(Index));
+            }
 
-            return View(course);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            await _courseService.DeleteCourse(id);
             TempData["Success"] = "ลบสำเร็จ";
             return RedirectToAction(nameof(Index));
         }

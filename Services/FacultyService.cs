@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SchoolManagement.Web.Data;
 using SchoolManagement.Web.Models;
 
@@ -14,6 +13,7 @@ namespace SchoolManagement.Web.Services
             _context = context;
         }
 
+
         public async Task<List<Faculty>> GetAllFaculties()
         {
             return await _context.Faculties
@@ -23,49 +23,42 @@ namespace SchoolManagement.Web.Services
 
         public async Task<Faculty?> GetFacultyById(int id)
         {
-            return await _context.Faculties
-                .FromSqlInterpolated($"EXEC GetFacultyById @Id = {id}") 
-                .FirstOrDefaultAsync();
+            var list = await _context.Faculties
+                .FromSqlInterpolated($"EXEC GetFacultyById @Id = {id}")
+                .ToListAsync();
+
+            return list.FirstOrDefault();
         }
 
-        public async Task AddFaculty(Faculty faculty)
+
+        public async Task<SpResult> AddFaculty(Faculty faculty)
         {
-            try
-            {
-                await _context.Database.ExecuteSqlInterpolatedAsync(
-                    $"EXEC [dbo].[AddFaculty] @Name = {faculty.FacultyName ?? string.Empty}");
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException(ex.Message);
-            }
+            var results = await _context.Database
+                .SqlQuery<SpResult>($"EXEC [dbo].[AddFaculty] @Name = {faculty.FacultyName ?? string.Empty}")
+                .ToListAsync();
+
+            return results.FirstOrDefault()
+                ?? new SpResult { IsPass = "0", Message = "ดำเนินการไม่สำเร็จ" };
         }
 
-        public async Task UpdateFaculty(Faculty faculty)
+        public async Task<SpResult> UpdateFaculty(Faculty faculty)
         {
-            try
-            {
-                await _context.Database.ExecuteSqlInterpolatedAsync(
-                    $"EXEC UpdateFaculty @Id = {faculty.FacultyId}, @Name = {faculty.FacultyName}");
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException(ex.Message);
-            }
+            var results = await _context.Database
+                .SqlQuery<SpResult>($"EXEC [dbo].[UpdateFaculty] @Id = {faculty.FacultyId}, @Name = {faculty.FacultyName}")
+                .ToListAsync();
+
+            return results.FirstOrDefault()
+                ?? new SpResult { IsPass = "0", Message = "ดำเนินการไม่สำเร็จ" };
         }
 
-       
-        public async Task DeleteFaculty(int id)
+        public async Task<SpResult> DeleteFaculty(int id)
         {
-            try
-            {
-                await _context.Database
-                    .ExecuteSqlInterpolatedAsync($"EXEC DeleteFaculty @Id = {id}");
-            }
-            catch (SqlException ex)
-            {
-                throw new InvalidOperationException(ex.Message);
-            }
+            var results = await _context.Database
+                .SqlQuery<SpResult>($"EXEC [dbo].[DeleteFaculty] @Id = {id}")
+                .ToListAsync();
+
+            return results.FirstOrDefault()
+                ?? new SpResult { IsPass = "0", Message = "ดำเนินการไม่สำเร็จ" };
         }
     }
 }
